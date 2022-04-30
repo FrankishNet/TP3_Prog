@@ -8,7 +8,7 @@ const User = require("../model/user");
 /*-------------------*/
 exports.getIndex = (req, res) => {res.render("new");}
 exports.getSearch = (req, res) => {res.render("search", {product: undefined});}
-exports.getIndexSlash = (req, res) => {res.render("/");}
+//exports.getIndexSlash = (req, res) => {res.render("/");} <-- I am pretty sure this was never used.
 exports.redirectIndex = (req, res) => {res.redirect("/");}
 exports.getSignup = (req, res) => {res.render("signup");}
 exports.getLogin = (req, res) => {res.render("login");}
@@ -19,13 +19,25 @@ exports.getUnAuthenticated = (req, res) => {res.render("home");}
 
 /*-------------------*/
 exports.allProducts = (req, res) => {
-    Product.find({}).then(product => {
-        res.render("index", {
-            products: product
+
+    console.log("allProducts :: Checking for authentication");
+    if(req.isAuthenticated()){
+        console.log("allProducts :: authenticated!");
+        Product.find({}).then(product => {
+            res.render("index", {
+                products: product
+            });
+        }).catch(error => {
+            console.log(error);
         });
-    }).catch(error => {
-        console.log(error);
-    });
+    }else{
+        console.log("allProducts :: not authenticated!");
+        res.render("index", {
+            products: []
+        });
+    }
+
+
 }
 /*-------------------*/
 

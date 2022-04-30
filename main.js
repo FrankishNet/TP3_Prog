@@ -14,7 +14,7 @@ const passport = require ('passport');
 const cookieParser = require('cookie-parser');  
 const expressSession = require('express-session'); 
 const connectFlash = require('connect-flash');
-const LocalStrategy = require('passport-local').Strategy; 
+//const LocalStrategy = require('passport-local').Strategy; 
 
 const mainRouter = require('./route/user');
 app.set('view engine', 'ejs');

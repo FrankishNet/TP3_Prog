@@ -22,7 +22,7 @@ module.exports = {
                 res.locals.redirect = "/signup";
                 next();
             } else {
-                req.flash("success_msg", "Account sucessfully created !");
+                req.flash("success_msg", "Account sucessfully created !");                
                 res.locals.redirect = "/";
                 next();
             }
@@ -44,8 +44,19 @@ module.exports = {
         res.render("login");
     },
 
-    authenticate1: passport.authenticate("local", {
-        failureRedirect: "/login",
-        successRedirect: "/"
-    })
+    isUserAthenticated: (req, res, next)=>  {
+        console.log("isUserAthenticated :: Checking if user is authenticated");
+        if(!req.isAuthenticated()){
+            console.log("isUserAthenticated :: not authenticated");
+            req.flash("error_msg", "You must be authenticated first.");
+            res.redirect('/login');
+        } else{
+            console.log("isUserAthenticated :: authenticated");
+            next();
+        }  
+    },
+
+  //  authenticAction: (req, res, next)=> {
+  //      passport.authenticate('local', { failureRedirect: '/login', failureMessage: true })
+  //  }
 };
